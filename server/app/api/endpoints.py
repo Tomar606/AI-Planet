@@ -1,28 +1,35 @@
-import os
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from pydantic import BaseModel
-from app.services.pdf_service import extract_text_from_pdf, ask_question
+from app.services.pdf_service import ask_question
+import os
+import shutil
 
 router = APIRouter()
-
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-@router.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
-    file_location = os.path.join(UPLOAD_DIR, file.filename)
-    with open(file_location, "wb") as f:
-        f.write(await file.read())
-    text = extract_text_from_pdf(file_location)
-    return {"filename": file.filename, "uploaded_path": file_location, "text": text}
 
 class QuestionRequest(BaseModel):
     filename: str
     question: str
 
+def get_question_request(request: QuestionRequest):
+    return request
+
 @router.post("/ask-question")
-async def ask_question_endpoint(request: QuestionRequest):
+async def ask_question_endpoint(request: QuestionRequest = Depends(get_question_request)):
     answer = ask_question(request.filename, request.question)
     if not answer:
         raise HTTPException(status_code=404, detail="Answer not found")
     return {"answer": answer}
+
+@router.post("/upload")
+async def upload_pdf(file: UploadFile = File(...)):
+    try:
+        upload_dir = "uploads"
+        os.makedirs(upload_dir, exist_ok=True)
+        file_path = os.path.join(upload_dir, file.filename)
+        
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        return {"filename": file.filename}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error uploading PDF: {str(e)}")

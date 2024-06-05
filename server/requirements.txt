@@ -1,4 +1,10 @@
 fastapi
 uvicorn
-PyMuPDF
-llama-index
+pydantic
+PyPDF2
+openai
+langchain
+langchain_community
+langchain_openai
+faiss-cpu
+
