@@ -1,7 +1,6 @@
 import os
+from fastapi import APIRouter, File, UploadFile, HTTPException
 from pydantic import BaseModel
-from fastapi import APIRouter, File, UploadFile, HTTPException, Query
-from app.models.question_request import QuestionRequest
 from app.services.pdf_service import extract_text_from_pdf, ask_question
 
 router = APIRouter()
@@ -24,6 +23,6 @@ class QuestionRequest(BaseModel):
 @router.post("/ask-question")
 async def ask_question_endpoint(request: QuestionRequest):
     answer = ask_question(request.filename, request.question)
-    if answer is None:
+    if not answer:
         raise HTTPException(status_code=404, detail="Answer not found")
     return {"answer": answer}
