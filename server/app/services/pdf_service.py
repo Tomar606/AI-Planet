@@ -29,7 +29,7 @@ def ask_question(filename: str, question: str) -> str:
     file_path = os.path.join("uploads", filename)
     text = extract_text_from_pdf(file_path)
 
-    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     texts = text_splitter.split_text(text)
     
     docsearch = FAISS.from_texts(texts, embeddings)
