@@ -1,30 +1,41 @@
 import os
-import fitz
-from llama_index.core import VectorStoreIndex, Document
-from app.models.question_request import QuestionRequest
+from PyPDF2 import PdfReader
 from fastapi import HTTPException
+from dotenv import load_dotenv
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain.chains.question_answering import load_qa_chain
+from langchain.chains import conversational_retrieval
+from langchain_community.llms import OpenAI
+from langchain.text_splitter import CharacterTextSplitter
 
-UPLOAD_DIR = "uploads"
+load_dotenv()
+
+embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+
 
 def extract_text_from_pdf(file_path: str) -> str:
-    with fitz.open(file_path) as pdf_document:
-        text = ""
-        for page_num in range(len(pdf_document)):
-            page = pdf_document.load_page(page_num)
-            text += page.get_text()
-    return text
+    try:
+        with open(file_path, "rb") as file:
+            reader = PdfReader(file)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text()
+        return text
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error reading PDF: {str(e)}")
 
-def ask_question(file_name: str, question: str):
-    file_path = os.path.join(UPLOAD_DIR, file_name)
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail="File not found")
-
+def ask_question(filename: str, question: str) -> str:
+    file_path = os.path.join("uploads", filename)
     text = extract_text_from_pdf(file_path)
-    documents = [Document(text)]
 
-    index = VectorStoreIndex(documents)
-
-    response = index.query(question)
-    answer = response.response  # Adjusting based on expected response structure
-
-    return {"question": question, "answer": answer}
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    texts = text_splitter.split_text(text)
+    
+    docsearch = FAISS.from_texts(texts, embeddings)
+    
+    qa_chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+    qa_pipeline = conversational_retrieval(retriever=docsearch.as_retriever(), combine_docs_chain=qa_chain)
+    
+    result = qa_pipeline({"question": question})
+    return result["answer"]

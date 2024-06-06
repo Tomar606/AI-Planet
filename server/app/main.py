@@ -1,18 +1,12 @@
+# app/main.py
+
 from fastapi import FastAPI
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from app.api.endpoints import router
+from app.api.endpoints import router as api_router
 
 app = FastAPI()
 
-app.include_router(router)
+app.include_router(api_router, prefix="/api")
 
-@app.get('/')
-def homepage():
-    return "Hello World !!"
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
-
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the FastAPI application!"}
