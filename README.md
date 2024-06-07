@@ -15,6 +15,7 @@ The AI Planet Chat Application is a web-based platform that allows users to uplo
    cd AI-Planet/server
 
 ### Create an .env file inside the server folder and put your openai API key inside it
+
 OPENAI_API_KEY= <paste your key here>
 
 ## Installation
