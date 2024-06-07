@@ -6,7 +6,6 @@ from app.api.endpoints import router as api_router
 
 app = FastAPI()
 
-# Configure CORS middleware
 origins = [
     "http://localhost:5173/",
     "http://localhost:5173"
@@ -20,7 +19,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include API router
 app.include_router(api_router, prefix="/api")
 
 @app.get("/")
