@@ -7,7 +7,6 @@ from app.api.endpoints import router as api_router
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173/",
     "http://localhost:5173",
     "https://ai-planet-xi.vercel.app"
 ]
