@@ -3,20 +3,10 @@ from pydantic import BaseModel
 from app.services.pdf_service import ask_question
 import os
 import shutil
-from fastapi.middleware.cors import CORSMiddleware
 
 
 router = APIRouter()
 
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Update this with your React frontend's origin
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"],
-)
 
 class QuestionRequest(BaseModel):
     filename: str
