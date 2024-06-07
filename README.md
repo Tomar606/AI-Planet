@@ -25,6 +25,7 @@ OPENAI_API_KEY= <paste your key here>
 Backend (Windows)
 ```bash
 cd server
+mkdir uploads
 python -m venv env
 .\env\Scripts\activate
 pip install -r requirements.txt
@@ -33,6 +34,7 @@ uvicorn app.main:app --reload
 Backend (MacOS and Linux)
 ```bash
 cd server
+mkdir uploads
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
