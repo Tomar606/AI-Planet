@@ -1,12 +1,12 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, FastAPI
+# endpoints.py
+
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from pydantic import BaseModel
 from app.services.pdf_service import ask_question
 import os
 import shutil
 
-
 router = APIRouter()
-
 
 class QuestionRequest(BaseModel):
     filename: str

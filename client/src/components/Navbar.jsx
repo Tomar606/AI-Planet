@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logoai from '../assets/logoai.png';
 import axios from 'axios';
 
 const Navbar = () => {
+  // Clear local storage on component mount
+  useEffect(() => {
+    localStorage.clear();
+    console.log('Local storage cleared');
+  }, []);
+
   const [pdfName, setPdfName] = useState(localStorage.getItem('pdfName') || '');
 
   const handleFileUpload = async (event) => {
