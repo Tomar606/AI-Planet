@@ -17,26 +17,23 @@ The AI Planet Chat Application is a web-based platform that allows users to uplo
 ### Create an .env file inside the server folder and put your openai API key inside it
 OPENAI_API_KEY= <paste your key here>
 
-#### Create a virtual environment (optional but recommended):
-   python -m venv env
-
-### Activate the virtual environment:
-
-#### On Windows:
-
-
-.\env\Scripts\activate
-
-#### On macOS and Linux:
-source env/bin/activate
-
 ## Installation
 
 ## Run locally
 
-Backend
+Backend (Windows)
 ```bash
 cd server
+python -m venv env
+.\env\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+Backend (MacOS and Linux)
+```bash
+cd server
+python -m venv env
+source env/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
