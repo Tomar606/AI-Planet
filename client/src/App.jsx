@@ -14,7 +14,7 @@ const App = () => {
     
     try {
       setLoading(true);
-      const response = await axios.post('http://127.0.0.1:8000/api/ask-question', {
+      const response = await axios.post('https://ai-planet-kuz9.onrender.com/api/ask-question', {
         filename: localStorage.getItem('pdfName'), // Fetch the filename from localStorage
         question: message
       });
