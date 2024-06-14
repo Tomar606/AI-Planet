@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from pydantic import BaseModel
-from app.services.pdf_service import ask_question
+from app.services.pdf_service import ask_question, extract_text_from_pdf
 import os
 import shutil
 
@@ -31,7 +31,9 @@ async def upload_pdf(file: UploadFile = File(...)):
         
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+
+            text =  extract_text_from_pdf(file_path)
         
-        return {"filename": file.filename}
+        return {"filename": file.filename, "text": text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error uploading PDF: {str(e)}")
