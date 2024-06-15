@@ -47,11 +47,3 @@ frontend
   npm install
   npm run dev
   ```
-
-## Screenshots
-
-![App Screenshot](screenshots/pc.png "PC")
-
-![App Screenshot](screenshots/phone.png "PC")
-
-
