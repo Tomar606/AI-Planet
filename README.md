@@ -1,8 +1,8 @@
-# AI Planet Chat Application
+# DocuMate Chat Application
 
 ## Overview
 
-The AI Planet Chat Application is a web-based platform that allows users to upload PDFs and engage in chat interactions with an AI. The application consists of a React-based frontend and a Flask-based backend. This README provides setup instructions, API documentation, and a brief overview of the application's architecture.
+The DocuMate Chat Application is a web-based platform that allows users to upload PDFs and engage in chat interactions with an AI. The application consists of a React-based frontend and a Flask-based backend. This README provides setup instructions, API documentation, and a brief overview of the application's architecture.
 
 
 ## Setup Instructions
