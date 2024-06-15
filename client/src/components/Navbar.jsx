@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import logoai from '../assets/logoai.png';
 import axios from 'axios';
+import GRVL from "../assets/GRVL.png"
 
 const Navbar = () => {
   // Clear local storage on component mount
@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md p-4 flex justify-between items-center">
       <div className="flex items-center">
-        <img src={logoai} alt="AI Planet Logo" className="h-10 w-24" />
+        <img src={GRVL} alt="AI Planet Logo" className="h-10" />
       </div>
       <div className='flex items-center'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-4 text-green-500">

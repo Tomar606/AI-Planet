@@ -1,5 +1,4 @@
-import React from 'react';
-import logoai2 from '../assets/logoai2.png'
+import GRVL2 from "../assets/GRVL2.png"
 
 const ChatWindow = ({ messages, loading }) => {
   return (
@@ -22,7 +21,7 @@ const ChatWindow = ({ messages, loading }) => {
           </svg>
           
           ) : (
-            <img src={logoai2} alt="AI" className="h-7 w-7 mr-4" />
+            <img src={GRVL2} alt="AI" className="h-7 w-7 mr-4" />
           )}
           <p className="text-lg">{msg.text}</p>
         </div>
