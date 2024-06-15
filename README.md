@@ -11,8 +11,8 @@ The DocuMate Chat Application is a web-based platform that allows users to uploa
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/Tomar606/AI-Planet.git
-   cd AI-Planet/server
+   git clone https://github.com/Tomar606/DocuMate.git
+   cd DocuMate/server
 
 ### Create an .env file inside the server folder and put your openai API key inside it
 
